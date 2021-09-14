@@ -32,11 +32,13 @@
 							},setting.usbPowerOffTimeout*1000)
 						}
 					}
-					uni.showToast({
+					let pwi = uni.requireNativePlugin('lich-PowerOnAutoStart');
+					pwi.toastMakeText("USB电源已断开"+msg);
+					/*uni.showToast({
 						icon:'none',
 						title: "USB电源已断开"+msg,
 						duration: 2000
-					});	
+					});	*/
 				}
 			}
 		}

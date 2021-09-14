@@ -7,6 +7,12 @@
 						<input class="uni-input" v-model="setting.url"  placeholder="http://ip:port" />
 					</view>
 					<button class="mini-btn" @click="check" :loading="checkLoading" type="default" size="mini">测试</button>
+					<view class="uni-form-item uni-column">
+						<view class="title" >开机自启动</view>
+						<view>
+							<switch name="autoStart" @change="autoStartChange" :checked="ind.autoStart"  />
+						</view>
+					</view>
 					<view class="uni-title uni-common-pl">USB断电关机超时(需要ROOT)</view>
 					<view class="uni-list">
 						<view class="uni-list-cell">
@@ -81,7 +87,7 @@
 			return {
 				checkLoading:false,
 				setting:{url:"",brightness:59,usbPowerOffTimeout:"-1",heartbeatDetection:"10",heartbeatError:"restScreen",orientation:"portrait-primary"},
-				ind:{uptc:0,hd:0,he:0,o:0,b:0},
+				ind:{uptc:0,hd:0,he:0,o:0,b:0,autoStart:true},
 				usbPowerOffTimeouts:[{key:"不关机",value:"-1"},{key:"1秒",value:"1"},{key:"5秒",value:"5"},{key:"10秒",value:"10"},{key:"20秒",value:"20"},{key:"40秒",value:"40"},{key:"60秒",value:"60"}],
 				heartbeatDetections:[{key:"10秒",value:"10"},{key:"20秒",value:"20"},{key:"40秒",value:"40"},{key:"60秒",value:"60"}],
 				heartbeatErrors:[{key:"息屏",value:"restScreen"},{key:"关机(需要ROOT)",value:"shutdown"},{key:"保持常亮",value:"none"}],
@@ -89,10 +95,10 @@
 			}
 		},
 		onShow(){
-	
-			
-			
-			
+			let pwi = uni.requireNativePlugin('lich-PowerOnAutoStart');
+			pwi.isPowerOnAutoStart((d)=>{
+					this.ind.autoStart=d;
+			})
 			let setting=uni.getStorageSync("setting");
 			if(!setting){
 				uni.setStorageSync("setting",this.setting);
@@ -124,6 +130,10 @@
 				this.ind.o = e.detail.value;
 				this.setting.orientation=this.orientations[this.ind.o].value;
 			},
+			autoStartChange:function(e){
+				this.ind.autoStart = e.detail.value;
+				console.log(this.ind.autoStart);
+			},
 			valueToIndex:function(d,v){
 				let index;
 				for(var i=0;i<d.length;i++){
@@ -140,15 +150,19 @@
 				if(await this.checkUrl(this.setting.url))message="地址可以访问"
 				else message="地址无法访问";
 				console.log(message)
-				uni.showToast({
+				let pwi = uni.requireNativePlugin('lich-PowerOnAutoStart');
+				pwi.toastMakeText(message);
+				/*uni.showToast({
 					icon:'none',
 					title: message,
 					duration: 5000,
 					
-				});	
+				});	*/
 				this.checkLoading=false;
 			},
 			save:async function(e){
+				let pwi = uni.requireNativePlugin('lich-PowerOnAutoStart');
+				pwi.setPowerOnAutoStart(this.ind.autoStart);
 				this.setting.brightness=e.detail.value.brightness;
 				uni.setStorageSync("setting",this.setting);
 				uni.navigateTo({url:"/pages/show/show",animationType: 'none'});

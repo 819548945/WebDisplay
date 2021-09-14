@@ -53,20 +53,15 @@
 		methods: {
 			heartbeatTask:async function(){
 				let pwi = uni.requireNativePlugin('lich-PowerOnAutoStart');
-				console.log(77)
 				let flag= await this.checkUrl(this.setting.url);
-				console.log(88+"flag"+flag)
 				if(this.flag!=flag){
 					this.flag=flag
 					if(this.flag==false){
 						this.message="无信号输入";
-						console.log(11)
 						if(this.setting.heartbeatError=="restScreen"){
-							setTimeout(() => {
-								console.log(33)							
+							setTimeout(() => {			
 								if(this.flag==false){
 									pwi.wakeAndUnlock({"wake":false,"unlock":false});
-									console.log(22)
 								}
 							},5000)	
 						}else if(this.setting.heartbeatError=="shutdown"){

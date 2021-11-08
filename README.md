@@ -14,7 +14,10 @@
 
 
 ![Screenshot_2021-09-06-16-53-02](https://user-images.githubusercontent.com/30515245/132189544-7bef6b85-70ae-4867-b718-2bd2a2e15ad1.png)
+### 应用
+[AIDA64监控屏-展示篇](https://www.bilibili.com/video/BV1MR4y1E7u9)
 
+[AIDA64监控屏-教学篇](https://www.bilibili.com/video/BV1CU4y1u77)
 
 
 

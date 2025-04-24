@@ -17,7 +17,7 @@
 ### 应用
 [AIDA64监控屏-展示篇](https://www.bilibili.com/video/BV1MR4y1E7u9)
 
-[AIDA64监控屏-教学篇](https://www.bilibili.com/video/BV1CU4y1u77)
+[AIDA64监控屏-教学篇](https://www.bilibili.com/video/BV1CU4y1u77v)
 
 
 
